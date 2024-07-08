@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 1em;
+            margin-right: 10px;
+            border: 2px solid #4facfe;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00f2fe;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #00c6ff;
+            transform: scale(1.05);
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            transition: opacity 0.3s ease;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+        <p>Guess the number between 1 and 100</p>
+        <input type="number" id="guessInput" placeholder="Enter your guess">
+        <button onclick="makeGuess()">Guess</button>
+        <p id="feedback"></p>
+    </div>
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function makeGuess() {
+            const guessInput = document.getElementById("guessInput");
+            const feedback = document.getElementById("feedback");
+            const guess = parseInt(guessInput.value);
+
+            attempts++;
+
+            if (isNaN(guess)) {
+                feedback.textContent = "Please enter a valid number.";
+                feedback.classList.add("fade-in");
+                return;
+            }
+
+            if (guess < secretNumber) {
+                feedback.textContent = "Too low! Try again.";
+            } else if (guess > secretNumber) {
+                feedback.textContent = "Too high! Try again.";
+            } else {
+                feedback.textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
+            }
+
+            feedback.classList.add("fade-in");
+            setTimeout(() => {
+                feedback.classList.remove("fade-in");
+            }, 500);
+        }
+    </script>
+</body>
+</html>
